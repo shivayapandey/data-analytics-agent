@@ -1,0 +1,13 @@
+streamlit
+langchain-experimental
+langchain-community
+langchain-groq
+langchain-core
+pandas
+matplotlib
+seaborn
+numpy
+pandasql
+plotly
+scikit-learn
+kaleido
