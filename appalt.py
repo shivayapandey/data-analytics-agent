@@ -18,16 +18,13 @@ except ImportError:
     SQL_AVAILABLE = False
 from PIL import Image
 
-# Get API keys and configurations from Streamlit secrets
 AZURE_DEPLOYMENT = st.secrets["AZURE_DEPLOYMENT"]
 AZURE_ENDPOINT = st.secrets["AZURE_ENDPOINT"]
 AZURE_API_KEY = st.secrets["AZURE_API_KEY"]
 AZURE_API_VERSION = st.secrets["AZURE_API_VERSION"]
 
-# Set environment variables
 os.environ["AZURE_API_KEY"] = AZURE_API_KEY
 
-# Initialize session states
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 if 'df' not in st.session_state:
@@ -109,7 +106,6 @@ def execute_sql_query(query, df):
 def execute_visualization_code(code, df):
     """Execute visualization code and return the plot"""
     try:
-        # Create a dictionary for safe execution
         exec_globals = {
             'pd': pd,
             'plt': plt,
@@ -117,18 +113,14 @@ def execute_visualization_code(code, df):
             'df': df
         }
         
-        # Create a BytesIO buffer to store the image
         buf = io.BytesIO()
         
-        # Execute the visualization code
         exec(code, exec_globals)
         
-        # Ensure the figure is saved to the buffer
         plt.savefig(buf, format='png', dpi=100, bbox_inches='tight')
-        plt.close()  # Close the figure to free memory
+        plt.close()  
         
         buf.seek(0)
-        # Verify it's a valid PNG
         test_img = Image.open(buf)
         buf.seek(0)
         return buf
